@@ -15,5 +15,6 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "commander": "^2.12.2"
-  }
+  },
+  "repository": "https://github.com/WickedDogg/snookerTerminal.git"
 }

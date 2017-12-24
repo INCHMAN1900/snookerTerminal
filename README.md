@@ -2,7 +2,7 @@
 一个简单的斯诺克命令行工具，可以用来看比赛和查一些基本数据
 
 ##使用
-`npm install snooker`
+`npm install snookerterminal -g`
 安装完成之后即在命令行使用`snooker`命令
 
 ##API
