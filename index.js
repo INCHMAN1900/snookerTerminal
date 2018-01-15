@@ -47,7 +47,12 @@ if (C.livescore) {
 				rawData += chunk
 			})
 			res.on('end', function () {
-				var { data } = JSON.parse(rawData)
+				var data;
+				try {
+					data = JSON.parse(rawData).data;
+				} catch (err) {
+					return log('请求失败，请重试')
+				}
 				if (data.length === 0) {
 					return log('暂时没有直播，请稍后再试')
 				}
@@ -81,7 +86,12 @@ if (C.today) {
 			rawData += chunk
 		})
 		res.on('end', function () {
-			var { data } = JSON.parse(rawData)
+			var data;
+			try {
+				data = JSON.parse(rawData).data;
+			} catch (err) {
+				return log('请求失败，请重试')
+			}
 			if (data.length === 0) {
 				return log('今天没有比赛')
 			}
@@ -111,7 +121,12 @@ if (C.ranking) {
 			rawData += chunk
 		})
 		res.on('end', function () {
-			const { data } = JSON.parse(rawData)
+			var data;
+			try {
+				data = JSON.parse(rawData).data;
+			} catch (err) {
+				return log('请求失败，请重试')
+			}
 			const length = isNaN(parseInt(C.ranking)) ? 10000 : parseInt(C.ranking)
 			log(chalk.bold('当前世界排名'))
 			data.forEach((el, index) => {
