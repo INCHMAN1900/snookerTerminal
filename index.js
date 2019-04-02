@@ -139,17 +139,3 @@ if (C.ranking) {
     })
   })
 }
-
-/**
- * beautify the output of score number
- */
-function formatScoreNumber(no, position, length = 2) {
-  return expandString(no, position, length)
-}
-
-/**
- * beautify the output of ranking number
- */
-function formatRankingNumber(no) {
-  return expandString(no, 'back', 3)
-}
