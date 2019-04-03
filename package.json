@@ -1,6 +1,6 @@
 {
   "name": "snookerterminal",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "a terminal program, used to watch snooker.",
   "main": "index.js",
   "scripts": {

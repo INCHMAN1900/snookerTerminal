@@ -131,7 +131,7 @@ if (C.ranking) {
     data.forEach((player, index) => {
       if (index < length) {
         log(
-          expandString(player.no, 'back', 3),
+          chalk.gray(expandString(player.no, 'back', 3)),
           expandString(player.name, 'back', 24),
           expandString(player.prize, 'front', 12)
         )
