@@ -2,7 +2,7 @@ const https = require('https')
 
 const HEADER = {
   'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_2 like Mac OS X) AppleWebKit/602.3.12 (KHTML, like Gecko) Mobile/14C92 Safari/601.1 MicroMessenger/6.7.3 Language/zh_CN',
-  'Referer': 'https://servicewechat.com/wx9f585c533a37e135/{version}/page-frame.html'
+  'Referer': 'https://servicewechat.com//{version}/page-frame.html'
 }
 
 function request (url, options = {}) {
