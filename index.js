@@ -126,7 +126,7 @@ if (C.ranking) {
   request('https://snkdev.top/dev/api/v1/player/ranking').then(datd => {
     const length = isNaN(parseInt(C.ranking)) ? 10000 : parseInt(C.ranking)
     log()
-    log(chalk.bold('当前世界排名'))
+    log(chalk.bold(chalk.green('当前世界排名')))
     log()
     data.forEach((player, index) => {
       if (index < length) {
