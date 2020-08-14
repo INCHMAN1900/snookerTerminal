@@ -16,6 +16,8 @@ const expandString = require('./utils').expandString
 
 const log = console.log
 
+const logSubtitle = title => log(chalk.rgb(0xaa, 0xaa, 0xaa)(title))
+
 C.version('1.0.0')
   .option('-l --livescore', 'show live score')
   .option(
@@ -24,6 +26,7 @@ C.version('1.0.0')
   )
   .option('-t --today', "show today's match list")
   .option('-r --ranking [length]', 'show the current world ranking')
+  .option('-a --all', 'show world ranking of all the players')
   .parse(process.argv)
 
 /**
@@ -41,7 +44,7 @@ if (C.livescore) {
     if (seconds < 5) {
       return log('间隔不得小于5s')
     }
-    setInterval(function() {
+    setInterval(function () {
       outputLiveScore()
     }, parseInt(C.interval) * 1000)
   }
@@ -90,7 +93,7 @@ if (C.livescore) {
  */
 
 if (C.today) {
-  request('https://snkdev.top/dev/api/v1/match/today')
+  request('https://api.fri.tv/api/v2/match/matchListByDate/?predatestart=&nextdatestart=&encoding=utf-8&userid=&sign=')
     .then(data => {
       if (data.length === 0) {
         return log('今天没有比赛')
@@ -98,24 +101,28 @@ if (C.today) {
       log(space(56, '-'))
       data.forEach(session => {
         log()
-        log(chalk.bold(`比赛轮次：${session.round} 时间：${session.time}`))
+        log(chalk.bold(`比赛时间：${chalk.green(session.datainfo)}`))
         log()
-        const { againstList } = session
-        againstList.forEach((against, index) => {
+        const { datalist: matches } = session
+        matches.forEach((match, index) => {
+          log(`比赛：${match.matchname} 轮次：${match.luncititle}`)
+          logSubtitle(`时间：${match.matchdate}`)
           log(
-            chalk.gray(against.no) + ' ',
-            expandString(against.p1name, 'back', 20),
-            expandString(against.p1set, 'front', 2),
+            expandString(match.player1, 'back', 20),
+            expandString(match.player1fen, 'front', 2),
             ' : ',
-            expandString(against.p2set, 'back', '2'),
-            expandString(against.p2name, 'front', 20)
+            expandString(match.player2fen, 'back', '2'),
+            expandString(match.player2, 'front', 20)
           )
+          if (index !== matches.length - 1) {
+            log()
+          }
         })
         log()
         log(space(56, '-'))
       })
     })
-    .catch(err => {})
+    .catch(err => { })
 }
 
 /**
@@ -123,8 +130,11 @@ if (C.today) {
  */
 
 if (C.ranking) {
-  request('https://snkdev.top/dev/api/v1/player/ranking').then(datd => {
-    const length = isNaN(parseInt(C.ranking)) ? 10000 : parseInt(C.ranking)
+  request('https://snkdev.top/dev/api/v1/player/ranking').then(data => {
+    let length = parseInt(C.ranking)
+    if (!length) {
+      length = C.all ? 10000 : 16
+    }
     log()
     log(chalk.bold(chalk.green('当前世界排名')))
     log()
@@ -137,5 +147,6 @@ if (C.ranking) {
         )
       }
     })
+    log()
   })
 }

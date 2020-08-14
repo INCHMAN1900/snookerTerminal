@@ -19,8 +19,8 @@ function request (url, options = {}) {
       })
       res.on('end', () => {
         try {
-          data = JSON.parse(rawData).data;
-          resolve(data)
+          let json = JSON.parse(rawData);
+          resolve(json.data || json.list)
 				} catch (err) {
 					reject(err)
 				}
