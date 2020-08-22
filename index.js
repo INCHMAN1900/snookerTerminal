@@ -11,14 +11,15 @@ const chalk = require('chalk')
 
 const request = require('./request')
 
-const space = require('./utils').space
-const expandString = require('./utils').expandString
+const { space, expandString } = require('./utils')
 
 const log = console.log
 
 const logSubtitle = title => log(chalk.rgb(0xaa, 0xaa, 0xaa)(title))
 
-C.version('1.0.0')
+const pkg = require('./package.json')
+
+C.version(pkg.version)
   .option('-l --livescore', 'show live score')
   .option(
     '--interval [seconds]',
@@ -32,7 +33,6 @@ C.version('1.0.0')
 /**
  * output live score if --livescore or -l option is provided
  */
-
 if (C.livescore) {
   outputLiveScore()
   const interval = C.interval
